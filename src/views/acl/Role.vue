@@ -106,7 +106,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
-// const showUserList = ref([]);
 const dialogShow = ref(false);
 const loading = ref(false);
 const currentPage = ref(1);
