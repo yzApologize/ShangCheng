@@ -106,6 +106,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
+import { getUserList, deleteUser, addUser, updateUser } from '@/api/user';
+import { ElDialog, ElDrawer } from 'element-plus';
+import { ElForm, ElFormItem, ElInput, ElButton, ElPagination } from 'element-plus';
 const dialogShow = ref(false);
 const loading = ref(false);
 const currentPage = ref(1);
