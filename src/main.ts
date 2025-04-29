@@ -11,7 +11,7 @@ import '@/permission'; //路由鉴权
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'; //引入element-plus所有图标
-
+import 'element-plus/theme-chalk/dark/css-vars.css'; //暗黑模式
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

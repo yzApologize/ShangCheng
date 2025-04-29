@@ -15,7 +15,7 @@
     <div class="tabbarRight">
       <el-button icon="Refresh" circle size="small" @click="refresh"></el-button>
       <el-button icon="FullScreen" circle size="small" @click="fullScreen"></el-button>
-      <el-button icon="Setting" circle size="small"></el-button>
+      <el-button icon="Setting" circle size="small" @click="openSetting"></el-button>
       <img
         :src="userStore.userInfo.avatar"
         width="24px"
@@ -35,6 +35,20 @@
         </template>
       </el-dropdown>
     </div>
+    <el-drawer title="设置" v-model="settingVisible" size="400px">
+      <el-form label-width="70px">
+        <el-form-item label="主题颜色">
+          <el-color-picker
+            v-model="color"
+            show-alpha
+            :predefine="predefineColors"
+            @change="colorChange" />
+        </el-form-item>
+        <el-form-item label="暗黑模式">
+          <el-switch v-model="darkMode" @change="changeModel" />
+        </el-form-item>
+      </el-form>
+    </el-drawer>
   </div>
 </template>
 
@@ -47,7 +61,30 @@ let userStore = useUserStore();
 let layoutSettingStore = useLayoutSettingStore();
 let route = useRoute();
 let router = useRouter();
+let settingVisible = ref(false);
+let color = ref('rgba(255, 255, 255, 1)');
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+  'rgba(255, 69, 0, 0.68)',
+  'rgb(255, 120, 0)',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577'
+]);
+let darkMode = ref(false);
 console.log('路由', route.matched);
+//打开设置
+const openSetting = () => {
+  settingVisible.value = true;
+};
 //控制菜单折叠
 const fold = () => {
   if (!layoutSettingStore.isfold) {
@@ -84,6 +121,18 @@ const fullScreen = () => {
       element.msRequestFullscreen();
     }
   }
+};
+//切换暗黑
+const changeModel = () => {
+  if (darkMode.value) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+};
+//切换主题颜色
+const colorChange = () => {
+  document.documentElement.style.setProperty('--el-color-primary', color.value);
 };
 //退出登录
 const logOut = async () => {

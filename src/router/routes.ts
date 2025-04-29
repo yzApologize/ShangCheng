@@ -13,7 +13,7 @@ export const constantRoute = [
   {
     path: '/',
     component: () => import('@/views/layout/index.vue'),
-    name: 'layout',
+    name: 'Layout',
     meta: {
       title: 'layout',
       hidden: false,
@@ -24,7 +24,7 @@ export const constantRoute = [
       {
         path: '/home',
         component: () => import('@/views/home/index.vue'),
-        name: 'home',
+        name: 'Home',
         meta: {
           title: '首页',
           hidden: false,
@@ -36,7 +36,7 @@ export const constantRoute = [
   {
     path: '/screen',
     component: () => import('@/views/screen/index.vue'),
-    name: 'screen',
+    name: 'Screen',
     meta: {
       title: '数据大屏',
       hidden: false,
@@ -46,7 +46,7 @@ export const constantRoute = [
   {
     path: '/acl',
     component: () => import('@/views/layout/index.vue'),
-    name: 'acl',
+    name: 'Acl',
     meta: {
       title: '权限管理',
       hidden: false,
@@ -57,7 +57,7 @@ export const constantRoute = [
       {
         path: '/acl/user',
         component: () => import('@/views/acl/User.vue'),
-        name: 'user',
+        name: 'User',
         meta: {
           title: '用户管理',
           hidden: false,
@@ -67,7 +67,7 @@ export const constantRoute = [
       {
         path: '/acl/role',
         component: () => import('@/views/acl/Role.vue'),
-        name: 'role',
+        name: 'Role',
         meta: {
           title: '角色管理',
           hidden: false,
@@ -77,7 +77,7 @@ export const constantRoute = [
       {
         path: '/acl/permission',
         component: () => import('@/views/acl/Permission.vue'),
-        name: 'permission',
+        name: 'Permission',
         meta: {
           title: '菜单管理',
           hidden: false,

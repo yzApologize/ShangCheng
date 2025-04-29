@@ -1,8 +1,10 @@
 <template>
-  <div class="homeContainer">
-    <img :src="userStore.userInfo.avatar" alt="" />
-    <div>欢迎登陆，{{ userStore.userInfo.name }}</div>
-  </div>
+  <el-card>
+    <div class="homeContainer">
+      <img :src="userStore.userInfo.avatar" alt="" />
+      <div style="margin-left: 10px">欢迎登陆，{{ userStore.userInfo.name }}</div>
+    </div>
+  </el-card>
 </template>
 
 <script setup lang="ts">
