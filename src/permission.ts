@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     console.log('未登录,不允许访问');
-    to.path === '/login' ? next() : next({ path: '/login' });
+    to.path === '/login' || '/screen' ? next() : next({ path: '/login' });
   }
   // next();
 });
