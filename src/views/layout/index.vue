@@ -41,7 +41,7 @@ import Tabbar from './Tabbar.vue';
 const userStore = useUserStore();
 const layoutSettingStore = useLayoutSettingStore();
 const route = useRoute();
-console.log('菜单列表', userStore.menuRoutes);
+console.log('用户菜单列表', userStore.menuRoutes);
 </script>
 
 <style scoped lang="scss">

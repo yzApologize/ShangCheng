@@ -2,17 +2,32 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import { LoginForm } from '@/api/user/type';
-import { constantRoute } from '@/router/routes';
+import { constantRoute, asyncRoute, anyRoute } from '@/router/routes';
+import { useRouter } from 'vue-router';
 import { reqUserLogin, reqUserInfo, reqLogout } from '@/api/user';
+import cloneDeep from 'lodash/cloneDeep';
+//定义一个函数，用来过滤当前用户需要展示的异步路由
+const filterAsyncRoute = (asyncRoute: any, routes: any) => {
+  return asyncRoute.filter((item: any) => {
+    if (item.children && item.children.length > 0) {
+      item.children = filterAsyncRoute(item.children, routes);
+    }
+    return routes.includes(item.name);
+  });
+};
+// console.log('引入函数', cloneDeep);
 let useUserStore = defineStore(
   'User',
   () => {
+    const router = useRouter();
     const userInfo = reactive({
       token: '',
       name: '',
       avatar: ''
     });
+    const buttonList = ref([]);
     const menuRoutes = ref(constantRoute);
+    const userAsyncRouteFlag = ref(false);
     const userLogin = async (loginForm: LoginForm) => {
       //用户登录
       let result = await reqUserLogin(loginForm);
@@ -31,6 +46,15 @@ let useUserStore = defineStore(
       if (result.code == 200) {
         userInfo.name = result.data.name;
         userInfo.avatar = result.data.avatar;
+        buttonList.value = result.data.buttons;
+        //计算当前用户需要展示的异步路由
+        const userRoutes = filterAsyncRoute(cloneDeep(asyncRoute), result.data.routes);
+        menuRoutes.value = [...constantRoute, ...userRoutes, ...anyRoute];
+        //但是要把所有的异步路由全部添加到路由表中，否则会出现404
+        [...userRoutes, ...anyRoute].forEach((item: any) => {
+          router.addRoute(item);
+        });
+        userAsyncRouteFlag.value = true;
         return 'ok';
       } else {
         return Promise.reject(new Error('获取用户信息失败'));
@@ -65,7 +89,9 @@ let useUserStore = defineStore(
       userInfoFun,
       userLogout,
       userInfo,
-      menuRoutes
+      menuRoutes,
+      buttonList,
+      userAsyncRouteFlag
     };
   },
   {
@@ -73,7 +99,7 @@ let useUserStore = defineStore(
       // 指定使用 sessionStorage 存储
       storage: sessionStorage,
       // 只持久化 count 状态
-      paths: ['userInfo']
+      pick: ['userInfo']
     }
   }
 );

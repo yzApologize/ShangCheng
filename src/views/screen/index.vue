@@ -18,7 +18,9 @@
         <div class="center">
           <CenterScreen />
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <RightScreen />
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +31,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import LeftScreen from './LeftScreen.vue';
 import CenterScreen from './centerScreen.vue';
+import RightScreen from './RightScreen.vue';
 
 const screen = ref(null);
 const currentTime = ref(null);
@@ -155,6 +158,7 @@ onUnmounted(() => {
       }
       .center {
         flex: 2;
+        padding: 0px 10px;
       }
       .right {
         flex: 1;

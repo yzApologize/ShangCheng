@@ -2,7 +2,9 @@
   <div class="tradeMarkContainer">
     <el-card>
       <div style="margin-bottom: 10px">
-        <el-button type="primary" icon="Plus" @click="add">添加品牌</el-button>
+        <el-button type="primary" icon="Plus" @click="add" v-has="'btn.Trademark.add1'"
+          >添加品牌</el-button
+        >
       </div>
       <el-table :data="tableData" border style="width: 100%" v-loading="loadingFlag">
         <el-table-column type="index" width="100" label="序号" align="center"></el-table-column>

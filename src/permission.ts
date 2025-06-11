@@ -18,14 +18,27 @@ router.beforeEach((to, from, next) => {
   // 判断是否登录
   if (userStore.userInfo.token) {
     console.log('已登录,允许访问');
+    console.log('将要去的路由', to.path);
     if (to.path === '/login') {
       next({ path: '/' });
+      return;
+    }
+    console.log('12312313', userStore.userAsyncRouteFlag);
+
+    //判断动态路由是否添加
+    if (!userStore.userAsyncRouteFlag) {
+      console.log('路由守卫判断动态路由');
+      userStore.userInfoFun().then(() => {
+        next({ ...to, replace: true });
+      });
+      return;
     } else {
       next();
     }
   } else {
+    console.log(to.path);
     console.log('未登录,不允许访问');
-    to.path === '/login' || '/screen' ? next() : next({ path: '/login' });
+    to.path === '/login' ? next() : next({ path: '/login' });
   }
   // next();
 });
